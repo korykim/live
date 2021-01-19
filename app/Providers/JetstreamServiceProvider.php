@@ -11,6 +11,7 @@ use App\Actions\Jetstream\RemoveTeamMember;
 use App\Actions\Jetstream\UpdateTeamName;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
+use Laravel\Fortify\Fortify;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,11 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //自定义用户登录和注册路径
+        //Fortify::loginView('front/welcome');
+        //Fortify::registerView('error');
+
+
         $this->configurePermissions();
 
         Jetstream::createTeamsUsing(CreateTeam::class);

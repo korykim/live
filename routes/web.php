@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\PostsController;
 use App\Http\Livewire\Counter;
+use App\Http\Livewire\News;
 use App\Http\Livewire\Posts;
+use App\Http\Livewire\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +21,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('news',News::class)->name('news');
+Route::get('product',Product::class)->name('product');
+
+
+Route::get('pp',[PostsController::class, 'index']);
+
+Route::get('/detail/{id}', [PostsController::class, 'detail'])->name('detail');
 
 //Route::get('counter', Counter::class);
 

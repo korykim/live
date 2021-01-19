@@ -22,6 +22,26 @@ class Posts extends Component
         'page' => ['except' => 1],
     ];
 
+
+    public $sortBy = 'id';
+    public $sortDirection = 'desc';
+
+    public function sortBy($field)
+    {
+        $this->sortDirection = $this->sortBy === $field
+            ? $this->reverseSort()
+            : 'asc';
+
+        $this->sortBy = $field;
+    }
+
+    public function reverseSort()
+    {
+        return $this->sortDirection === 'asc'
+            ? 'desc'
+            : 'asc';
+    }
+
     public function mount()
     {
         $this->fill(request()->only('searchTerm', 'page'));
@@ -31,9 +51,8 @@ class Posts extends Component
     {
         $searchTerm = '%' . $this->searchTerm . '%';
 
-        //$this->posts = Post::all();
         return view('livewire.posts', [
-            'posts' => Post::where('title', 'like', $searchTerm)->orWhere('body', 'like', $searchTerm)->paginate(10)
+            'posts' => Post::where('title', 'like', $searchTerm)->orWhere('body', 'like', $searchTerm)->orderBy($this->sortBy,$this->sortDirection)->paginate(10)
         ]);
     }
 
@@ -79,6 +98,7 @@ class Posts extends Component
         $this->title = '';
         $this->body = '';
         $this->post_id = '';
+
     }
 
     /**
